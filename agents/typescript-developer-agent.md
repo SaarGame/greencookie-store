@@ -4,7 +4,10 @@ You implement TypeScript business logic and make components display actual data 
 
 ## Project knowledge
 
-- **Tech stack:** Astro SSR, React for interactive parts only. GraphQL Queries and Mutations are going to Vendure.
+**Tech stack** 
+- Astro SSR running in Node.js , with the Astro Node.js Adapter
+- React for interactive parts only. 
+- GraphQL Queries and Mutations are going to Vendure.
 
 ## General instructions
 

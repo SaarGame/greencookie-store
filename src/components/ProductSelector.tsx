@@ -42,47 +42,33 @@ export function ProductSelector({
 
   // Derive the currently "active" variant and whether the exact selection is sold out
   const { currentVariant, soldOut } = useMemo(() => {
-    if (product.variants.length === 0) {
+    const { variants, optionGroups } = product;
+
+    if (variants.length === 0) {
       return { currentVariant: undefined, soldOut: true };
     }
 
     const groupIds = Object.keys(selectedOptions);
 
-    let exactMatch = undefined;
-    let partialMatch = undefined;
-
-    if (groupIds.length > 0) {
-      exactMatch = product.variants.find((variant) => {
-        if (variant.options.length !== groupIds.length) return false;
-        return variant.options.every(
-          (option) => selectedOptions[option.group.id] === option.id,
-        );
-      });
-
-      if (!exactMatch) {
-        partialMatch = product.variants.find((variant) =>
-          variant.options.every((option) => {
-            const selected = selectedOptions[option.group.id];
-            return !selected || selected === option.id;
-          }),
-        );
-      }
-    }
-
-    // Only consider the selection "complete" when every option group has a selection
     const allGroupsSelected =
-      product.optionGroups.length > 0 &&
-      groupIds.length === product.optionGroups.length;
+      optionGroups.length > 0 && groupIds.length === optionGroups.length;
 
-    // Fallback to a safe variant so the UI always has something to show
-    const fallbackVariant = defaultVariant ?? product.variants[0];
+    const exactMatch =
+      groupIds.length > 0 && allGroupsSelected
+        ? variants.find(
+            (variant) =>
+              variant.options.length === groupIds.length &&
+              variant.options.every(
+                (option) => selectedOptions[option.group.id] === option.id,
+              ),
+          )
+        : undefined;
 
     return {
-      currentVariant: exactMatch ?? partialMatch ?? fallbackVariant,
+      currentVariant: exactMatch,
       soldOut: allGroupsSelected && !exactMatch,
     };
   }, [
-    defaultVariant,
     product.optionGroups.length,
     product.variants,
     selectedOptions,
@@ -92,7 +78,7 @@ export function ProductSelector({
   const [adding, setAdding] = useState(false);
 
   // Update the selected option for a single option group
-  async function handleSelectOption(groupId: string, optionId: string) {
+  function handleSelectOption(groupId: string, optionId: string) {
     setSelectedOptions((prev) => ({
       ...prev,
       [groupId]: optionId,
