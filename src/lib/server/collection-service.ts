@@ -1,9 +1,6 @@
 import request from "graphql-request";
 import { graphql, type ResultOf } from "gql.tada";
-import { vendureApi } from "../../config";
-import { SwrCache } from "../util/swr-cache";
-
-export const cache = new SwrCache();
+import { vendureApi, cache } from "../../config";
 
 export type NavigationCollection = NonNullable<
   ResultOf<typeof CollectionsList>
@@ -39,12 +36,11 @@ const CollectionsList = graphql(`
 export async function getNavigationCollections(
   locale: string,
 ): Promise<NavigationCollection[]> {
-  const ttl = 1000 * 60 * 5; // 5 minutes
   const getNavigationCollections = () =>
     request(vendureApi(locale), CollectionsList);
   const {
     collections: { items },
-  } = await cache.get(locale, getNavigationCollections, ttl);
+  } = await cache.get(locale, getNavigationCollections);
   return items;
 }
 

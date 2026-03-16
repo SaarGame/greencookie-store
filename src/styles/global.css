@@ -11,8 +11,11 @@
   font-family: "Sen", sans-serif;
 }
 
+html,
 body {
-  overflow-x: clip; /* clip hides overflow without breaking position:sticky on mobile */
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip; /* clip hides overflow without breaking position:sticky on mobile while preventing horizontal scroll */
 }
 
 /* Mobile menu toggle */

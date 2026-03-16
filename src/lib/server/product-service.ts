@@ -1,11 +1,7 @@
 import { type ResultOf } from "gql.tada";
 import request from "graphql-request";
-import { vendureApi } from "../../config";
+import { vendureApi, cache } from "../../config";
 import { graphql } from "../../graphql/graphql";
-import { SwrCache } from "../util/swr-cache";
-
-const cache = new SwrCache();
-const PRODUCTS_CACHE_TTL = 1000 * 60 * 60;
 
 const ProductDetailFragment = graphql(`
   fragment ProductDetail on Product @_unmask {
@@ -108,11 +104,7 @@ export async function getPopularProducts(
     });
   const {
     products: { items },
-  } = await cache.get(
-    `popular-products-${limit}`,
-    getPopularProducts,
-    PRODUCTS_CACHE_TTL,
-  );
+  } = await cache.get(`popular-products-${limit}`, getPopularProducts);
   return items;
 }
 
@@ -124,11 +116,7 @@ export async function getProductBySlug(
     request(vendureApi(locale), ProductBySlugQuery, {
       slug,
     });
-  const { product } = await cache.get(
-    `product-${slug}`,
-    getProductBySlug,
-    PRODUCTS_CACHE_TTL,
-  );
+  const { product } = await cache.get(`product-${slug}`, getProductBySlug);
   return product;
 }
 

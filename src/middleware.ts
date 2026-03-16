@@ -7,7 +7,11 @@ const i18nMiddleware = defineMiddleware(async (context, next) => {
   const pathname = context.url.pathname;
 
   // Skip locale detection for specific routes
-  if (pathname.startsWith("/_image") || pathname === "/sitemap.xml") {
+  if (
+    pathname.startsWith("/_image") ||
+    pathname === "/sitemap.xml" ||
+    pathname.startsWith("/api/")
+  ) {
     return next();
   }
 
