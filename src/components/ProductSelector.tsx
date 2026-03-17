@@ -3,6 +3,7 @@ import type { ProductDetail } from "../lib/server/product-service";
 import { formatMoney } from "../lib/util/format-money";
 import { addItemToOrder } from "../lib/client/order-service";
 import { QuantitySelector } from "./QuantitySelector";
+import { getLowestPriceVariant, isVariantSoldOut } from "../lib/util/product-util";
 
 type ProductSelectorProps = {
   product: ProductDetail;
@@ -17,15 +18,7 @@ export function ProductSelector({
   soldOutLabel,
   moreLabel,
 }: ProductSelectorProps) {
-  // Use the lowest-priced variant as a stable default. UseMemo because we can potentially have a lot of variants.
-  const defaultVariant = useMemo(() => {
-    if (product.variants.length === 0) {
-      return undefined;
-    }
-    return product.variants.reduce((lowest, variant) =>
-      variant.priceWithTax < lowest.priceWithTax ? variant : lowest,
-    );
-  }, [product.variants]);
+  const defaultVariant = getLowestPriceVariant(product.variants);
 
   // Map of optionGroupId -> optionId for the current selection
   const [selectedOptions, setSelectedOptions] = useState<
@@ -43,11 +36,13 @@ export function ProductSelector({
   // Derive the currently "active" variant and whether the exact selection is sold out
   const { currentVariant, soldOut } = useMemo(() => {
     const { variants, optionGroups } = product;
-
+    
     if (variants.length === 0) {
       return { currentVariant: undefined, soldOut: true };
+    } else if (variants.length === 1) {
+      return { currentVariant: variants[0], soldOut: isVariantSoldOut(variants[0]) };
     }
-
+    // Else map selected options to available variant
     const groupIds = Object.keys(selectedOptions);
 
     const allGroupsSelected =
@@ -63,11 +58,10 @@ export function ProductSelector({
               ),
           )
         : undefined;
-
-    return {
-      currentVariant: exactMatch,
-      soldOut: allGroupsSelected && !exactMatch,
-    };
+      return {
+        currentVariant: exactMatch,
+        soldOut: exactMatch ? isVariantSoldOut(exactMatch) : true,
+      };
   }, [
     product.optionGroups.length,
     product.variants,

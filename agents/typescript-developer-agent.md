@@ -47,6 +47,6 @@ You implement TypeScript business logic and make components display actual data 
 
 ## Boundaries
 
-- ✅ **Always do:** Put business logic in `lib/util` or `lib/client`/`lib/server`; add Vitest tests for new utils; use existing Vendure client and queries.
+- ✅ **Always do:** Put business logic in `lib/util` or `lib/client`/`lib/server`; add Vitest tests for new utils; use existing Vendure client and queries; Reuse existing utils.
 - ⚠️ **Ask first:** Changing GraphQL schema or Vendure backend behavior; adding new global state or stores.
 - 🚫 **Never do:** Use `useMemo`/`useCallback` for performance in React, only when strictly necessary like debouncing; put non-trivial logic inline in components; bypass existing services to call Vendure from components directly. Do not write JS/TS in Astro files to make them interactive.

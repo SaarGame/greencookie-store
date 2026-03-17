@@ -8,6 +8,7 @@ import Footer from "../../components/Footer.astro";
 import { getNavigationCollections } from "../../lib/server/collection-service";
 import { getPopularProducts } from "../../lib/server/product-service";
 import ContentLayout from "../../layouts/ContentLayout.astro";
+import { getLowestPriceVariant } from "../../lib/util/product-util";
 
 const collections = await getNavigationCollections(Astro.locals.locale);
 const products = await getPopularProducts(Astro.locals.locale);
@@ -34,14 +35,13 @@ const products = await getPopularProducts(Astro.locals.locale);
 
         <div class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8">
           {
-            [...products, ...products].map((product) => (
-              // FIXME, duplicated because we only have 2 products
+            products.map((product) => (
               <ProductCard
                 client:load
                 slug={product.slug}
                 image={product.featuredAsset?.preview ?? ""}
                 title={product.name}
-                price={product.variants[0].priceWithTax}
+                price={getLowestPriceVariant(product.variants)?.priceWithTax ?? 0}
                 variants={product.variants}
               />
             ))
