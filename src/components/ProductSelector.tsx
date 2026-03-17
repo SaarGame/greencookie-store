@@ -44,20 +44,13 @@ export function ProductSelector({
     }
     // Else map selected options to available variant
     const groupIds = Object.keys(selectedOptions);
-
-    const allGroupsSelected =
-      optionGroups.length > 0 && groupIds.length === optionGroups.length;
-
-    const exactMatch =
-      groupIds.length > 0 && allGroupsSelected
-        ? variants.find(
+    const exactMatch = variants.find(
             (variant) =>
               variant.options.length === groupIds.length &&
               variant.options.every(
                 (option) => selectedOptions[option.group.id] === option.id,
               ),
-          )
-        : undefined;
+          );
       return {
         currentVariant: exactMatch,
         soldOut: exactMatch ? isVariantSoldOut(exactMatch) : true,
