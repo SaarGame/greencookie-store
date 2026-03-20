@@ -1,0 +1,140 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import Navigation from "../../../components/Navigation.astro";
+import { ProductCard } from "../../../components/ProductCard";
+import CollectionCard from "../../../components/CollectionCard.astro";
+import Footer from "../../../components/Footer.astro";
+import ContentLayout from "../../../layouts/ContentLayout.astro";
+
+const { collection } = Astro.params;
+
+const subcollections = [
+  {
+    slug: "summer",
+    name: "Summer Collection",
+    description: "Light and breezy styles for warm days",
+    image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=800&auto=format&fit=crop",
+  },
+  {
+    slug: "essentials",
+    name: "Essentials",
+    description: "Timeless pieces for every wardrobe",
+    image: "https://images.unsplash.com/photo-1445205170230-053b83016050?w=800&auto=format&fit=crop",
+  },
+];
+
+const mockProducts = [
+  {
+    slug: "classic-tee",
+    name: "Classic Tee",
+    price: 49,
+    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&auto=format&fit=crop",
+    variants: [
+      {
+        id: "1",
+        name: "Classic Tee",
+        sku: "CT-001",
+        stockLevel: "10",
+        currencyCode: "USD" as const,
+        priceWithTax: 49,
+        options: [],
+        featuredAsset: null,
+        assets: [],
+      },
+    ],
+  },
+  {
+    slug: "denim-jacket",
+    name: "Denim Jacket",
+    price: 129,
+    image: "https://images.unsplash.com/photo-1551537482-f2075a1d41f2?w=800&auto=format&fit=crop",
+    variants: [
+      {
+        id: "2",
+        name: "Denim Jacket",
+        sku: "DJ-001",
+        stockLevel: "5",
+        currencyCode: "USD" as const,
+        priceWithTax: 129,
+        options: [],
+        featuredAsset: null,
+        assets: [],
+      },
+    ],
+  },
+  {
+    slug: "canvas-sneakers",
+    name: "Canvas Sneakers",
+    price: 89,
+    image: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=800&auto=format&fit=crop",
+    variants: [
+      {
+        id: "3",
+        name: "Canvas Sneakers",
+        sku: "CS-001",
+        stockLevel: "8",
+        currencyCode: "USD" as const,
+        priceWithTax: 89,
+        options: [],
+        featuredAsset: null,
+        assets: [],
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout title="Collection" metaTitle="Collection" metaDescription="Browse our collection">
+  <Navigation />
+
+  <ContentLayout>
+    <main>
+      <div class="mb-8">
+        <h1 class="text-3xl font-bold capitalize">{collection?.replace(/-/g, " ")}</h1>
+        <p class="mt-2 opacity-70">Browse our curated selection</p>
+      </div>
+
+      <section aria-labelledby="subcollection-heading" class="mb-16">
+        <h2 id="subcollection-heading" class="text-2xl font-bold tracking-tight">
+          Subcollections
+        </h2>
+
+        <div class="mt-10 grid gap-4 lg:grid-cols-2 lg:gap-8">
+          {
+            subcollections.map((subcollection) => (
+              <CollectionCard
+                href={`/c/${subcollection.slug}`}
+                image={subcollection.image}
+                title={subcollection.name}
+                description={subcollection.description}
+              />
+            ))
+          }
+        </div>
+      </section>
+
+      <section aria-labelledby="products-heading">
+        <h2 id="products-heading" class="text-2xl font-bold tracking-tight">
+          Products
+        </h2>
+
+        <div class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8">
+          {
+            mockProducts.map((product) => (
+              <ProductCard
+                client:load
+                slug={product.slug}
+                image={product.image}
+                title={product.name}
+                price={product.price}
+                variants={product.variants}
+              />
+            ))
+          }
+        </div>
+      </section>
+    </main>
+  </ContentLayout>
+
+  <Footer />
+</BaseLayout>
