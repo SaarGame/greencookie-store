@@ -32,7 +32,17 @@ type Entry<T> = {
 };
 
 export class SwrCache implements Cache {
-  constructor(private defaultTtlSeconds: number) {}
+  /**
+   * @param defaultTtlSeconds Default time-to-live in seconds for cache entries.
+   * @param logSizeEveryN When set to a positive integer N, logs the serialized
+   *   byte size of all cache entries to the console with a 1-in-N probability
+   *   on each call to `get()`. Useful for monitoring cache memory usage in
+   *   production without logging on every request (because of performance reasons). Set to 0 (default) to disable.
+   */
+  constructor(
+    private defaultTtlSeconds: number,
+    private logSizeEveryN: number = 1,
+  ) {}
   private entries = new Map<string, Entry<unknown>>();
   private inFlight = new Map<string, Promise<void>>();
 
@@ -68,6 +78,17 @@ export class SwrCache implements Cache {
     if (shouldRevalidate) {
       const effectiveTtlSeconds = ttlSeconds ?? entry.ttlSeconds;
       this.revalidate(key, fetchFn, effectiveTtlSeconds);
+    }
+
+    if (this.logSizeEveryN > 0 && Math.random() < 1 / this.logSizeEveryN) {
+      // Only call this every N times because to prevent stringifying on every cache get
+      const bytes = new TextEncoder().encode(
+        JSON.stringify([...this.entries]),
+      ).length;
+      const mb = Math.round((bytes / 1024 / 1024) * 1000) / 1000;
+      console.log(
+        `[SwrCache] cache size: ${mb} MB across ${this.entries.size} entries`,
+      );
     }
 
     return entry.value as V;
