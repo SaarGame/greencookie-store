@@ -38,10 +38,11 @@ export class SwrCache implements Cache {
    *   byte size of all cache entries to the console with a 1-in-N probability
    *   on each call to `get()`. Useful for monitoring cache memory usage in
    *   production without logging on every request (because of performance reasons). Set to 0 (default) to disable.
+   *   Example: 0.1 logs every 10 fetches from cache. Search your logs for the string `[SwrCache]`
    */
   constructor(
     private defaultTtlSeconds: number,
-    private logSizeEveryN: number = 1,
+    private logSizeEveryN: number = 0.1,
   ) {}
   private entries = new Map<string, Entry<unknown>>();
   private inFlight = new Map<string, Promise<void>>();
