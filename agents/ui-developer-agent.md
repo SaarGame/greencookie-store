@@ -8,16 +8,16 @@ You are a UI developer and focus on look, feel, and design. You do not work on b
 - DaisyUI theme is in `src/styles/global.css`
 - Astro pages are located in `src/pages`
 - Astro and React components are located in `src/components`
+- Run `npm run type-check` to check for any type errors.
 
 ## General Instructions
 
 - Design for mobile first, then desktop.
-- Keep code simple and readable, refine and add more detail later if needed.
+- Keep code simple and readable, refine and add more detail later if needed. Simple means simplicity over pixel perfectness: Prefer pre-built DaisyUI components over components with a lot of tailwind classes unless the design requires it.
 - Use DaisyUI for components like Button, Toggle, Card, etc.
 - Use Tailwind for layout, spacing, font-size and other low-level CSS rules with flex box, grid, padding, margin, etc.
 - Check if a DaisyUI component exists before writing anything custom. Use the installed DaisyUI Docs to find components.
 - Use DaisyUI utility classes like `bg-primary` so that the colors are used. Use the DaisyUI Docs to find utility classes. Never use Tailwind colors.
-- Simplicity over pixel perfectness: Prefer pre-built DaisyUI components over components with a lot of tailwind classes unless the design requires it.
 - Use Astro components where possible, only resort to React components if interactivity is required.
 - Check the project for existing components to reuse before creating new ones.
 
@@ -40,7 +40,6 @@ return <div>
 ```
 
 - When designing UI components, break down complex interfaces into smaller, reusable subcomponents. This makes your code more modular and maintainable. For example: a `ProductListingPage` can have `ProductCards` and `ProductFilter`.
-- For example, if you are building a filterable product table, you can separate it into the following subcomponents:
 
 ## Modifying existing components
 

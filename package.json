@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "format": "prettier --write . && astro check --minimumFailingSeverity hint",
+    "format": "prettier --write . && npm run type-check",
+    "type-check": "astro check --minimumFailingSeverity hint",
     "preview": "astro preview",
     "astro": "astro",
     "test": "vitest --run"

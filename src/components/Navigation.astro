@@ -30,7 +30,7 @@ const base = `/${locale}`;
           {
             collections.map((collection) => {
               const hasChildren = collection.children?.length;
-              const link = `${base}/collection/${collection.slug}`;
+              const link = `${base}/c/${collection.slug}`;
               return (
                 <li>
                   {hasChildren ? (
@@ -42,7 +42,7 @@ const base = `/${locale}`;
                         <li class="grid grid-cols-2 gap-5">
                           {collection.children!.map((child) => (
                             <a
-                              href={`${base}/collection/${child.slug}`}
+                              href={`${base}/c/${child.slug}`}
                               class="card card-compact"
                             >
                               <figure class="aspect-square">

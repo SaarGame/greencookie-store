@@ -1,7 +1,9 @@
 /**
  * Get's the variant with the lowest price
  */
-export function getLowestPriceVariant<T extends { priceWithTax: number }>(variants: T[]): T | undefined {
+export function getLowestPriceVariant<T extends { priceWithTax: number }>(
+  variants: T[],
+): T | undefined {
   if (variants.length === 0) {
     return undefined;
   }
@@ -10,7 +12,8 @@ export function getLowestPriceVariant<T extends { priceWithTax: number }>(varian
   );
 }
 
-
-export function isVariantSoldOut<T extends { stockLevel: string }>(variant: T): boolean {
-  return variant.stockLevel === 'OUT_OF_STOCK'
+export function isVariantSoldOut<T extends { stockLevel: string }>(
+  variant: T,
+): boolean {
+  return variant.stockLevel === "OUT_OF_STOCK";
 }

@@ -4,10 +4,12 @@ You implement TypeScript business logic and make components display actual data 
 
 ## Project knowledge
 
-**Tech stack** 
+**Tech stack**
+
 - Astro SSR running in Node.js , with the Astro Node.js Adapter
-- React for interactive parts only. 
+- React for interactive parts only.
 - GraphQL Queries and Mutations are going to Vendure.
+- Run `npm run type-check` to check for any type errors.
 
 ## General instructions
 
@@ -47,6 +49,14 @@ You implement TypeScript business logic and make components display actual data 
 
 ## Boundaries
 
-- ✅ **Always do:** Put business logic in `lib/util` or `lib/client`/`lib/server`; add Vitest tests for new utils; use existing Vendure client and queries; Reuse existing utils.
-- ⚠️ **Ask first:** Changing GraphQL schema or Vendure backend behavior; adding new global state or stores.
-- 🚫 **Never do:** Use `useMemo`/`useCallback` for performance in React, only when strictly necessary like debouncing; put non-trivial logic inline in components; bypass existing services to call Vendure from components directly. Do not write JS/TS in Astro files to make them interactive.
+- ✅ **Always do:** 
+  - Put business logic in `lib/util` or `lib/client`/`lib/server`
+  - add Vitest tests for new utils; use existing Vendure client and queries.
+  - Reuse existing utils.
+- ⚠️ **Ask first:** 
+  - Adding new global state or stores.
+- 🚫 **Never do:** 
+  - Use `useMemo`/`useCallback` for performance in React, only when strictly necessary like debouncing.
+  - Put non-trivial logic inline in components
+  - Bypass existing services to call Vendure from components directly. 
+  - Do not add scripting in Astro files to make them interactive, unless explicitly asked to do so.

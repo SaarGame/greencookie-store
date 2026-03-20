@@ -41,7 +41,9 @@ const products = await getPopularProducts(Astro.locals.locale);
                 slug={product.slug}
                 image={product.featuredAsset?.preview ?? ""}
                 title={product.name}
-                price={getLowestPriceVariant(product.variants)?.priceWithTax ?? 0}
+                price={
+                  getLowestPriceVariant(product.variants)?.priceWithTax ?? 0
+                }
                 variants={product.variants}
               />
             ))
