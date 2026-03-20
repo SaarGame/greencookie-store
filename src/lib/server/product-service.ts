@@ -91,6 +91,7 @@ const ProductBySlugQuery = graphql(
 
 export type ProductDetail = NonNullable<ResultOf<typeof ProductDetailFragment>>;
 
+
 /**
  * Gets the first 5 products from Vendure
  */

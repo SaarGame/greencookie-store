@@ -3,10 +3,11 @@ import { graphql, type ResultOf } from "gql.tada";
 import { vendureApi, cache } from "../../config";
 
 export type NavigationCollection = NonNullable<
-  ResultOf<typeof CollectionsList>
+  ResultOf<typeof NavigationCollectionsQuery>
 >["collections"]["items"][number];
 
-const CollectionsList = graphql(`
+
+const NavigationCollectionsQuery = graphql(`
   query {
     collections(options: { topLevelOnly: true, take: 10 }) {
       items {
@@ -36,12 +37,97 @@ const CollectionsList = graphql(`
 export async function getNavigationCollections(
   locale: string,
 ): Promise<NavigationCollection[]> {
-  const getNavigationCollections = () =>
-    request(vendureApi(locale), CollectionsList);
+  const fetchNavigationCollections = () =>
+    request(vendureApi(locale), NavigationCollectionsQuery);
   const {
     collections: { items },
-  } = await cache.get(locale, getNavigationCollections);
+  } = await cache.get(locale, fetchNavigationCollections);
   return items;
+}
+
+const CollectionDetailQuery = graphql(
+  `
+    query GetCollectionDetail($slug: String!) {
+      collection(slug: $slug) {
+        id
+        name
+        slug
+        description
+        featuredAsset {
+          preview
+        }
+        children {
+          id
+          name
+          slug
+          description
+          featuredAsset {
+            preview
+          }
+        }
+        productVariants {
+          items {
+            id
+            name
+            sku
+            stockLevel
+            currencyCode
+            priceWithTax
+            options {
+              id
+              code
+              name
+              group {
+                id
+                name
+              }
+            }
+            featuredAsset {
+              id
+              preview
+            }
+            assets {
+              id
+              preview
+            }
+            product {
+              id
+              name
+              slug
+              featuredAsset {
+                id
+                preview
+              }
+            }
+          }
+        }
+      }
+    }
+  `,
+  [],
+);
+
+export type CollectionDetail = NonNullable<
+  ResultOf<typeof CollectionDetailQuery>["collection"]
+>;
+
+export type CollectionDetailVariant =
+  CollectionDetail["productVariants"]["items"][number];
+
+/**
+ * Get collection details by slug, including subcollections and product variants
+ */
+export async function getCollectionDetail(
+  locale: string,
+  slug: string,
+): Promise<CollectionDetail | null> {
+  const fetchCollectionDetail = () =>
+    request(vendureApi(locale), CollectionDetailQuery, { slug });
+  const { collection } = await cache.get(
+    `collection-detail-${slug}`,
+    fetchCollectionDetail,
+  );
+  return collection;
 }
 
 const SitemapCollectionsQuery = graphql(`

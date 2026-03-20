@@ -33,6 +33,8 @@ const nl = {
   checkout_rememberMe: "Onthoud mijn gegevens voor de volgende keer",
   pdp_addToCart: "In winkelwagen",
   pdp_soldOut: "Uitverkocht",
+  collection_subcollections: "Collecties",
+  collection_products: "Producten",
 };
 
 const en: typeof nl = {
@@ -70,6 +72,8 @@ const en: typeof nl = {
   checkout_rememberMe: "Remember my details for next time",
   pdp_addToCart: "Add to cart",
   pdp_soldOut: "Sold out",
+  collection_subcollections: "Collections",
+  collection_products: "Products",
 };
 
 export const translations = { nl, en };

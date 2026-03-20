@@ -3,14 +3,17 @@ import { formatMoney } from "../lib/util/format-money";
 import { addItemToOrder } from "../lib/client/order-service";
 import { ArrowUpRight } from "./icons/ArrowUpRight";
 import { Plus } from "./icons/Plus";
-import type { ProductDetail } from "../lib/server/product-service";
+
+interface Variant {
+  id: string;
+}
 
 interface Props {
   slug: string;
   image: string;
   title: string;
   price: number;
-  variants: ProductDetail["variants"];
+  variants: Variant[];
 }
 
 export function ProductCard({ slug, image, title, price, variants }: Props) {
