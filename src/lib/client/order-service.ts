@@ -19,6 +19,7 @@ import {
   AddPaymentToOrderMutation,
   EligiblePaymentMethodsQuery,
   CreateMolliePaymentIntentMutation,
+  OrderByCodeQuery,
 } from "./order-queries";
 import { $activeOrder, $cartOpen, $notification, m } from "./store";
 import { vendureClient } from "./vendure-client";
@@ -271,4 +272,15 @@ export async function createMolliePaymentIntent(
       { __typename?: "MolliePaymentIntent" }
     >
   ).url;
+}
+
+export async function getOrderByCode(
+  locale: string,
+  code: string,
+): Promise<ActiveOrder | null> {
+  const { orderByCode } = await vendureClient(locale).request(
+    OrderByCodeQuery,
+    { code },
+  );
+  return orderByCode ?? null;
 }

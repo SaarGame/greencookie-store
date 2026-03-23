@@ -35,6 +35,10 @@ const nl = {
   pdp_soldOut: "Uitverkocht",
   collection_subcollections: "Collecties",
   collection_products: "Producten",
+  order_confirmed: "Bestelling bevestigd!",
+  order_paymentFailed:
+    "Betaling mislukt of nog niet verwerkt. Controleer je e-mail of ga terug naar de homepage.",
+  order_backToHome: "Terug naar de homepage",
 };
 
 const en: typeof nl = {
@@ -74,6 +78,10 @@ const en: typeof nl = {
   pdp_soldOut: "Sold out",
   collection_subcollections: "Collections",
   collection_products: "Products",
+  order_confirmed: "Order confirmed!",
+  order_paymentFailed:
+    "Payment failed or not yet processed. Check your email or return to the homepage.",
+  order_backToHome: "Back to homepage",
 };
 
 export const translations = { nl, en };

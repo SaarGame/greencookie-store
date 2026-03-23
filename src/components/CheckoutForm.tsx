@@ -234,7 +234,7 @@ export function CheckoutForm({
     try {
       const locale = window.__locale;
       const currentOrder = $activeOrder.get();
-      const redirectUrl = `https://${window.location.host}/order/${currentOrder?.code}`;
+      const redirectUrl = `https://${window.location.host}/${locale}/order/${currentOrder?.code}`;
       const url = await createMolliePaymentIntent(locale, { redirectUrl });
       window.location.href = url;
     } catch (err: unknown) {

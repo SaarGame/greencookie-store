@@ -241,6 +241,17 @@ export const EligiblePaymentMethodsQuery = graphql(`
   }
 `);
 
+export const OrderByCodeQuery = graphql(
+  `
+    query GetOrderByCode($code: String!) {
+      orderByCode(code: $code) {
+        ...ActiveOrder
+      }
+    }
+  `,
+  [ActiveOrderFragment],
+);
+
 export const CreateMolliePaymentIntentMutation = graphql(`
   mutation CreateMolliePaymentIntent($input: MolliePaymentIntentInput!) {
     createMolliePaymentIntent(input: $input) {
