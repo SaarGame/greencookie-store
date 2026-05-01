@@ -1,11 +1,18 @@
 import { SwrCache, type Cache } from "./lib/util/swr-cache";
 
+const VENDURE_SHOP_API = import.meta.env.PUBLIC_VENDURE_SHOP_API;
+const DEFAULT_LOCALE_ENV = import.meta.env.PUBLIC_DEFAULT_LOCALE;
+const ENABLED_LOCALES_ENV = import.meta.env.PUBLIC_ENABLED_LOCALES;
+
 export const vendureApi = (locale: string) =>
-  `https://vendure.noharmdone.nl/shop-api?languageCode=${locale}`;
-export const DEFAULT_LOCALE = "nl";
-export const ENABLED_LOCALES = ["nl"];
+  `${VENDURE_SHOP_API}?languageCode=${locale}`;
+export const DEFAULT_LOCALE = DEFAULT_LOCALE_ENV || "en";
+export const ENABLED_LOCALES = ENABLED_LOCALES_ENV
+  ? ENABLED_LOCALES_ENV.split(",").map((l: string) => l.trim())
+  : ["en"];
 
 export const cache: Cache = new SwrCache(60 * 60 * 24); // 24 hours default TTL. Can be overridden per entry.
 
 // Uncomment this line to disable caching
 // export const cache: Cache = new NoOpCache();
+

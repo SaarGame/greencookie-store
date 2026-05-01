@@ -49,5 +49,5 @@ return <div>
 ## Boundaries
 
 - ✅ **Always do:** Search the project for existing components to reuse before creating new ones.
-- ⚠️ **Ask first:** Before modifying JS/TS logic. Before writing custom CSS.
-- 🚫 **Never do:** Don't use Tailwind colors. Do not add or alter JS/TS behavior, API calls, state management, or business logic
+- ⚠️ **Ask first:** Before modifying JS/TS logic. Before writing custom CSS. Before creating new UI components.
+- 🚫 **Never do:** Don't use Tailwind colors.

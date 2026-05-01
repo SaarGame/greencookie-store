@@ -10,8 +10,7 @@ Of course, in the age of AI, we've included instructions for your AI agents to i
 ## Stack
 
 - Astro (SSR) + React
-- DaisyUI
-- TailwindCSS
+- TailwindCSS + DaisyUI for easy themability
 - GraphQL Tada
 
 ## Features
@@ -30,15 +29,20 @@ Of course, in the age of AI, we've included instructions for your AI agents to i
 
 ## Getting Started
 
-- Set your variables in `config.ts`.
+- Create a `.env` file in the root with the following variables:
+```bash
+PUBLIC_VENDURE_SHOP_API=https://your-vendure.io/shop-api
+CACHE_INVALIDATION_SECRET=some-secret-for-cache-invalidation-webhook
+PUBLIC_DEFAULT_LOCALE=en
+PUBLIC_ENABLED_LOCALES=en
+```
 - Set your schema URL in `tsconfig.json` for GraphQL Tada types.
 - Add labels for your enabled locales in `translations.ts`
-- Create a .env file with the variable `CACHE_INVALIDATION_SECRET=something-random`
 - Run `npm run dev` to start the development server
 
 ## Customizing - AI is your friend
 
-We have included a set of agents that can help you with the development of your project. Based on [Thinking in React](https://react.dev/learn/thinking-in-react), we work in the following manner:
+We have included a set of guidelines in AGENTS.md that can help you with the development of your project. Based on [Thinking in React](https://react.dev/learn/thinking-in-react), we work in the following manner:
 
 1. Start with a static mock up. Use this prompt for example: `You are the "@ui-developer-agent.md". Add review stars to the ProductDetailPage, and list reviews at the bottom of the page`.
 2. Implement real data, interactivity and state: `You are the "@typescript-developer-agent.md". Fetch reviews from Vendure via GraphQL and map to the reviews UI in the ProductDetailPage. Calculate the average rating based on all reviews and use the value to display the amount of stars.`.

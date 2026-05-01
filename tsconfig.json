@@ -6,7 +6,7 @@
     "plugins": [
       {
         "name": "gql.tada/ts-plugin",
-        "schema": "https://vendure.noharmdone.nl/shop-api",
+        "schema": "https://your-vendure/shop-api",
         "tadaOutputLocation": "./src/graphql/graphql-env.d.ts"
       }
     ],
