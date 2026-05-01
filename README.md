@@ -1,7 +1,8 @@
 # Vendure Astro SSR + DaisyUI starter template
 
-
 Why another starter? This one is meant to quickly set up a storefront for Vendure, theme it with a single CSS file, and build on top of it. It really is a starter with only the essentials: You start here, theme it, then extend and modify it to fit your project.
+
+![](./screenshot.png)
 
 Of course, in the age of AI, we've included instructions for your AI agents to implement new features fast: See the `Customizing - AI is your friend` section for more information.
 
