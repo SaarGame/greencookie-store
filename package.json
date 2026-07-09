@@ -8,7 +8,7 @@
     "build": "astro build",
     "format": "prettier --write . && npm run type-check",
     "type-check": "astro check --minimumFailingSeverity hint",
-    "preview": "astro preview",
+    "preview": "npm run build && astro preview",
     "astro": "astro",
     "test": "vitest --run"
   },
@@ -37,5 +37,10 @@
     "prettier-plugin-astro": "0.14.1",
     "prettier-plugin-tailwindcss": "^0.8.0",
     "vitest": "^4.1.10"
+  },
+  "overrides": {
+    "@vitejs/plugin-react": {
+      "vite": "^8.1.4"
+    }
   }
 }

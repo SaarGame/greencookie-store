@@ -23,6 +23,12 @@ if (!collection) {
   return Astro.redirect("/404");
 }
 
+Astro.cache.set({
+  maxAge: 43200,
+  swr: 3600,
+  tags: ["collection", `collection:${slug}`],
+});
+
 const products = groupVariantsByProduct(collection.productVariants.items);
 const subcollections = collection.children ?? [];
 ---

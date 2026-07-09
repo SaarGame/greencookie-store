@@ -50,8 +50,22 @@ We have included a set of guidelines in AGENTS.md that can help you with the dev
 
 ## Cache invalidation
 
-To invalidate the SSR cache entries, you have to call the `/api/invalidate-cache` endpoint of the Vendure API with your `process.env.CACHE_INVALIDATION_SECRET` as a header.
+To invalidate all SSR cache entries, call the `/api/invalidate-cache` endpoint with your `CACHE_INVALIDATION_SECRET` as a Bearer token.
 
-```
+```bash
 curl -X GET "http://localhost:4321/api/invalidate-cache" -H "Authorization: Bearer test-secret456"
 ```
+
+To invalidate by tags, pass a comma-separated list of tags via the `tags` query parameter.
+
+```bash
+curl -X GET "http://localhost:4321/api/invalidate-cache?tags=home,product,product:slug-1" -H "Authorization: Bearer test-secret456"
+```
+
+Available tags:
+
+- `home` — home page
+- `collection` — all collection pages
+- `collection:<slug>` — a specific collection page
+- `product` — all product pages
+- `product:<slug>` — a specific product page

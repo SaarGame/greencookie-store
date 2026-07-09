@@ -1,5 +1,4 @@
 import { type ResultOf } from "gql.tada";
-import { cache } from "../../config";
 import { vendureClient } from "../util/vendure-client";
 import { graphql } from "../../graphql/graphql";
 
@@ -99,13 +98,11 @@ export async function getPopularProducts(
   locale: string,
   limit: number = 4,
 ): Promise<ProductDetail[]> {
-  const getPopularProducts = () =>
-    vendureClient(locale).request(PopularProductsQuery, {
-      limit,
-    });
   const {
     products: { items },
-  } = await cache.get(`popular-products-${limit}`, getPopularProducts);
+  } = await vendureClient(locale).request(PopularProductsQuery, {
+    limit,
+  });
   return items;
 }
 
@@ -113,11 +110,9 @@ export async function getProductBySlug(
   locale: string,
   slug: string,
 ): Promise<ProductDetail | null> {
-  const getProductBySlug = () =>
-    vendureClient(locale).request(ProductBySlugQuery, {
-      slug,
-    });
-  const { product } = await cache.get(`product-${slug}`, getProductBySlug);
+  const { product } = await vendureClient(locale).request(ProductBySlugQuery, {
+    slug,
+  });
   return product;
 }
 

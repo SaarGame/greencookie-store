@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { ENABLED_LOCALES, cache } from "../config";
+import { ENABLED_LOCALES } from "../config";
 import { getSitemapCollections } from "../lib/server/collection-service";
 import { getSitemapProducts } from "../lib/server/product-service";
 
@@ -61,14 +61,13 @@ ${urlLines}
 </urlset>`;
 }
 
-export const GET: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async ({ url, cache }) => {
   const baseUrl = url.origin;
-  const buildSitemap = () => buildSitemapXml(baseUrl);
-  const xml = await cache.get(`sitemap`, buildSitemap);
+  const xml = await buildSitemapXml(baseUrl);
+  cache.set({ maxAge: 43200, swr: 3600, tags: ["sitemap"] });
   return new Response(xml, {
     headers: {
       "Content-Type": "application/xml; charset=utf-8",
-      "Cache-Control": "public, max-age=3600",
     },
   });
 };

@@ -1,5 +1,4 @@
 import { graphql, type ResultOf } from "gql.tada";
-import { cache } from "../../config";
 import { vendureClient } from "../util/vendure-client";
 
 export type NavigationCollection = NonNullable<
@@ -37,11 +36,9 @@ const NavigationCollectionsQuery = graphql(`
 export async function getNavigationCollections(
   locale: string,
 ): Promise<NavigationCollection[]> {
-  const fetchNavigationCollections = () =>
-    vendureClient(locale).request(NavigationCollectionsQuery);
   const {
     collections: { items },
-  } = await cache.get(locale, fetchNavigationCollections);
+  } = await vendureClient(locale).request(NavigationCollectionsQuery);
   return items;
 }
 
@@ -121,11 +118,9 @@ export async function getCollectionDetail(
   locale: string,
   slug: string,
 ): Promise<CollectionDetail | null> {
-  const fetchCollectionDetail = () =>
-    vendureClient(locale).request(CollectionDetailQuery, { slug });
-  const { collection } = await cache.get(
-    `collection-detail-${slug}`,
-    fetchCollectionDetail,
+  const { collection } = await vendureClient(locale).request(
+    CollectionDetailQuery,
+    { slug },
   );
   return collection;
 }

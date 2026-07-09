@@ -1,10 +1,9 @@
 // @ts-check
-import { defineConfig } from "astro/config";
+import { defineConfig, memoryCache } from "astro/config";
 import node from "@astrojs/node";
 import tailwindcss from "@tailwindcss/vite";
 
 import react from "@astrojs/react";
-
 // https://astro.build/config
 export default defineConfig({
   integrations: [react()],
@@ -23,4 +22,10 @@ export default defineConfig({
     prefetchAll: true,
     defaultStrategy: "hover",
   },
+  cache: {
+    provider: memoryCache({
+      max: 1000 // max 1000 pages cached
+    }),
+  },
+
 });

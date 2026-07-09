@@ -14,6 +14,12 @@ const product = await getProductBySlug(
 if (!product) {
   return Astro.redirect(`/404`);
 }
+
+Astro.cache.set({
+  maxAge: 43200,
+  swr: 3600,
+  tags: ["product", `product:${Astro.params.product}`],
+});
 ---
 
 <BaseLayout

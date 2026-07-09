@@ -12,6 +12,8 @@ import { getLowestPriceVariant } from "../../lib/util/product-util";
 
 const collections = await getNavigationCollections(Astro.locals.locale);
 const products = await getPopularProducts(Astro.locals.locale);
+
+Astro.cache.set({ maxAge: 43200, swr: 3600, tags: ["home"] });
 ---
 
 <BaseLayout title="Astro" , metaTitle="Astro" , metaDescription="Astro">
@@ -67,7 +69,6 @@ const products = await getPopularProducts(Astro.locals.locale);
                 href={`/c/${collection.slug}`}
                 image={`${collection.featuredAsset?.preview}`}
                 title={collection.name}
-                description={collection.description}
               />
             ))
           }
