@@ -1,6 +1,6 @@
 import { type ResultOf } from "gql.tada";
-import request from "graphql-request";
-import { vendureApi, cache } from "../../config";
+import { cache } from "../../config";
+import { vendureClient } from "../util/vendure-client";
 import { graphql } from "../../graphql/graphql";
 
 const ProductDetailFragment = graphql(`
@@ -100,7 +100,7 @@ export async function getPopularProducts(
   limit: number = 4,
 ): Promise<ProductDetail[]> {
   const getPopularProducts = () =>
-    request(vendureApi(locale), PopularProductsQuery, {
+    vendureClient(locale).request(PopularProductsQuery, {
       limit,
     });
   const {
@@ -114,7 +114,7 @@ export async function getProductBySlug(
   slug: string,
 ): Promise<ProductDetail | null> {
   const getProductBySlug = () =>
-    request(vendureApi(locale), ProductBySlugQuery, {
+    vendureClient(locale).request(ProductBySlugQuery, {
       slug,
     });
   const { product } = await cache.get(`product-${slug}`, getProductBySlug);
@@ -148,8 +148,7 @@ export async function getSitemapProducts(
   let skip = 0;
   let hasMore = true;
   while (hasMore) {
-    const { products } = await request(
-      vendureApi(locale),
+    const { products } = await vendureClient(locale).request(
       SitemapProductsQuery,
       {
         skip,

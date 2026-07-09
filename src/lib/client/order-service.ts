@@ -22,7 +22,7 @@ import {
   OrderByCodeQuery,
 } from "./order-queries";
 import { $activeOrder, $cartOpen, $notification, m } from "./store";
-import { vendureClient } from "./vendure-client";
+import { vendureClient } from "../util/vendure-client";
 
 export type ActiveOrder = NonNullable<ResultOf<typeof ActiveOrderFragment>>;
 

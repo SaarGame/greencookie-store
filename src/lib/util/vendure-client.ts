@@ -1,5 +1,5 @@
 import { GraphQLClient } from "graphql-request";
-import { vendureApi } from "../../config";
+import { vendureApi, CHANNEL_TOKEN } from "../../config";
 
 const AUTH_TOKEN_KEY = "vendure-auth-token";
 
@@ -21,11 +21,16 @@ export function vendureClient(locale: string): GraphQLClient {
   return new GraphQLClient(vendureApi(locale), {
     fetch: async (url, options) => {
       const token = getAuthToken();
-      if (token) {
+      if (token || CHANNEL_TOKEN) {
         const headers = new Headers(
           options?.headers as HeadersInit | undefined,
         );
-        headers.set("authorization", `Bearer ${token}`);
+        if (CHANNEL_TOKEN) {
+          headers.set("vendure-token", CHANNEL_TOKEN);
+        }
+        if (token) {
+          headers.set("authorization", `Bearer ${token}`);
+        }
         options = { ...options, headers };
       }
       const response = await fetch(url, options);

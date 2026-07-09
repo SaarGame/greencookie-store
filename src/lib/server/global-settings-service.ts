@@ -1,6 +1,6 @@
-import request from "graphql-request";
 import type { ResultOf } from "gql.tada";
-import { cache, vendureApi } from "../../config";
+import { cache } from "../../config";
+import { vendureClient } from "../util/vendure-client";
 import { graphql } from "../../graphql/graphql";
 
 const AvailableCountriesQuery = graphql(`
@@ -21,7 +21,7 @@ export async function getAvailableCountries(
   locale: string,
 ): Promise<AvailableCountry[]> {
   const getAvailableCountries = () =>
-    request(vendureApi(locale), AvailableCountriesQuery);
+    vendureClient(locale).request(AvailableCountriesQuery);
   const result = await cache.get(
     `available-countries-${locale}`,
     getAvailableCountries,

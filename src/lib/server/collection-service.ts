@@ -1,6 +1,6 @@
-import request from "graphql-request";
 import { graphql, type ResultOf } from "gql.tada";
-import { vendureApi, cache } from "../../config";
+import { cache } from "../../config";
+import { vendureClient } from "../util/vendure-client";
 
 export type NavigationCollection = NonNullable<
   ResultOf<typeof NavigationCollectionsQuery>
@@ -38,7 +38,7 @@ export async function getNavigationCollections(
   locale: string,
 ): Promise<NavigationCollection[]> {
   const fetchNavigationCollections = () =>
-    request(vendureApi(locale), NavigationCollectionsQuery);
+    vendureClient(locale).request(NavigationCollectionsQuery);
   const {
     collections: { items },
   } = await cache.get(locale, fetchNavigationCollections);
@@ -122,7 +122,7 @@ export async function getCollectionDetail(
   slug: string,
 ): Promise<CollectionDetail | null> {
   const fetchCollectionDetail = () =>
-    request(vendureApi(locale), CollectionDetailQuery, { slug });
+    vendureClient(locale).request(CollectionDetailQuery, { slug });
   const { collection } = await cache.get(
     `collection-detail-${slug}`,
     fetchCollectionDetail,
@@ -159,7 +159,7 @@ export async function getSitemapCollections(
   while (hasMore) {
     const {
       collections: { items, totalItems },
-    } = await request(vendureApi(locale), SitemapCollectionsQuery, {
+    } = await vendureClient(locale).request(SitemapCollectionsQuery, {
       skip,
       take: SITEMAP_BATCH_SIZE,
     });
