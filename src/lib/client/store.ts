@@ -2,12 +2,7 @@ import type { ActiveOrder } from "./order-service";
 import { persistentAtom } from "@nanostores/persistent";
 import { atom } from "nanostores";
 import type { Notification } from "../../components/Notification";
-import {
-  createMessageFn,
-  type LocaleMessageFunctions,
-} from "../util/locale-util";
-import type { Messages } from "../../translations";
-
+import { ui, defaultLang } from "../../i18n/ui";
 /**
  * Active order store. Will always contain the latest active order.
  */
@@ -52,14 +47,15 @@ export const $savedCheckoutDetails =
     decode: JSON.parse,
   });
 
+type TranslationKey = keyof (typeof ui)[typeof defaultLang];
+
 /**
- * Message function to get translated messages for the current locale.
- * Should only be used on the client side! For server-side, use Astro.locals.m
+ * Translation function for the current locale.
+ * Should only be used on the client side!
  *
- * Example: `m.itemAddedToCart({ variant: "T-Shirt" })` returns `T-Shirt added to cart`
+ * Example: `t("cart.title")` returns "Shopping Cart"
  */
-export const m =
-  typeof window !== "undefined"
-    ? createMessageFn(window.__messages)
-    : // Type assertion because this will always be used client-side
-      (undefined as unknown as LocaleMessageFunctions<Messages>);
+export function t(key: TranslationKey): string {
+  const lang = (typeof window !== "undefined" ? window.__locale : defaultLang) as keyof typeof ui;
+  return (ui[lang]?.[key] ?? ui[defaultLang][key]) as string;
+}

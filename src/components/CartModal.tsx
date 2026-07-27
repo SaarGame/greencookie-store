@@ -1,6 +1,6 @@
 import { useStore } from "@nanostores/react";
 import { useEffect, useRef, useState } from "react";
-import { $activeOrder, $cartOpen, m } from "../lib/client/store";
+import { $activeOrder, $cartOpen, t } from "../lib/client/store";
 import { adjustOrderLine, removeOrderLine } from "../lib/client/order-service";
 import { formatMoney } from "../lib/util/format-money";
 import { CartModalCoupon } from "./CartModalCoupon";
@@ -36,11 +36,11 @@ export function CartModal() {
           >
             ✕
           </button>
-          <p>{m.cartEmpty()}</p>
+          <p>{t("cart.empty")}</p>
         </div>
         <form method="dialog" className="modal-backdrop">
           <button type="button" onClick={close}>
-            {m.close()}
+            {t("actions.close")}
           </button>
         </form>
       </dialog>
@@ -66,7 +66,7 @@ export function CartModal() {
       <div className="modal-box max-w-2xl p-0">
         <div className="flex items-center gap-2 p-4">
           <a href={checkoutUrl} className="btn btn-primary" onClick={close}>
-            {m.checkout()}
+            {t("actions.checkout")}
           </a>
           <button
             className="btn btn-sm btn-circle btn-ghost ml-auto"
@@ -101,7 +101,7 @@ export function CartModal() {
                   <RemoveLineButton orderLineId={line.id} />
                   <QuantitySelector
                     quantity={line.quantity}
-                    moreLabel={m.more()}
+                    moreLabel={t("actions.more")}
                     onQuantityChange={(newQuantity) =>
                       handleQuantityChange(line.id, newQuantity)
                     }
@@ -117,17 +117,17 @@ export function CartModal() {
 
           <div className="modal-action">
             <button className="btn btn-ghost" onClick={close}>
-              {m.continueShopping()}
+              {t("actions.continueShopping")}
             </button>
             <a href={checkoutUrl} className="btn btn-primary" onClick={close}>
-              {m.checkout()}
+              {t("actions.checkout")}
             </a>
           </div>
         </div>
       </div>
       <form method="dialog" className="modal-backdrop">
         <button type="button" onClick={close}>
-          {m.close()}
+          {t("actions.close")}
         </button>
       </form>
     </dialog>

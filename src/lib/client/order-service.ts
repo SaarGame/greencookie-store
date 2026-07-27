@@ -21,7 +21,7 @@ import {
   CreateMolliePaymentIntentMutation,
   OrderByCodeQuery,
 } from "./order-queries";
-import { $activeOrder, $cartOpen, $notification, m } from "./store";
+import { $activeOrder, $cartOpen, $notification, t } from "./store";
 import { vendureClient } from "../util/vendure-client";
 
 export type ActiveOrder = NonNullable<ResultOf<typeof ActiveOrderFragment>>;
@@ -57,10 +57,10 @@ export async function addItemToOrder(
       ?.lines.find((line) => line.productVariant.id == productVariantId)
       ?.productVariant.name ?? "";
   $notification.set({
-    message: m.itemAddedToCart({ variant }),
+    message: `<strong>${variant}</strong> ${t("cart.itemAdded")}`,
     type: "success",
     cta: {
-      text: m.viewCart({}),
+      text: t("cart.viewCart"),
       callback: () => {
         $cartOpen.set(true);
       },

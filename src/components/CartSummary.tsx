@@ -1,5 +1,5 @@
 import { formatMoney } from "../lib/util/format-money";
-import { m } from "../lib/client/store";
+import { t } from "../lib/client/store";
 import type { ActiveOrder } from "../lib/client/order-service";
 
 export function CartSummary({
@@ -14,7 +14,7 @@ export function CartSummary({
   return (
     <div className={`rounded-box space-y-2 p-4 ${className}`}>
       <div className="flex justify-between">
-        <span>{m.subtotal()}</span>
+        <span>{t("cart.subtotal")}</span>
         <span>{formatMoney(subTotalWithoutDiscounts)}</span>
       </div>
       {order?.discounts?.map((discount, i) => (
@@ -25,13 +25,13 @@ export function CartSummary({
       ))}
       {order?.shippingWithTax != undefined && (
         <div className="flex justify-between">
-          <span>{m.shipping()}</span>
+          <span>{t("cart.shipping")}</span>
           <span>{formatMoney(order?.shippingWithTax)}</span>
         </div>
       )}
       <div className="divider my-0"></div>
       <div className="flex justify-between text-lg font-bold">
-        <span>{m.total()}</span>
+        <span>{t("cart.total")}</span>
         <span>{formatMoney(order?.totalWithTax ?? 0)}</span>
       </div>
     </div>

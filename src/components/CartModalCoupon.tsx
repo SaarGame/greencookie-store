@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { m } from "../lib/client/store";
+import { t } from "../lib/client/store";
 import { applyCouponCode, removeCouponCode } from "../lib/client/order-service";
 
 export function CartModalCoupon({ couponCodes }: { couponCodes: string[] }) {
@@ -22,7 +22,7 @@ export function CartModalCoupon({ couponCodes }: { couponCodes: string[] }) {
     <div className="collapse-arrow bg-base-200 collapse">
       <input type="checkbox" />
       <div className="collapse-title font-medium">
-        {m.checkout_couponCode()}
+        {t("checkout.couponCode")}
       </div>
       <div className="collapse-content space-y-2">
         <div className="join w-full">
@@ -32,14 +32,14 @@ export function CartModalCoupon({ couponCodes }: { couponCodes: string[] }) {
             value={code}
             onChange={(e) => setCode(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleApply()}
-            placeholder={m.checkout_couponCode()}
+            placeholder={t("checkout.couponCode")}
           />
           <button className="btn btn-primary join-item" onClick={handleApply}>
-            {m.apply()}
+            {t("actions.apply")}
           </button>
         </div>
         {hasError && (
-          <p className="text-error text-sm">{m.invalidCouponCode()}</p>
+          <p className="text-error text-sm">{t("checkout.invalidCouponCode")}</p>
         )}
         {couponCodes.length > 0 && (
           <div className="flex flex-wrap gap-2">

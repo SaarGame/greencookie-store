@@ -10,6 +10,7 @@ import {
   groupVariantsByProduct,
   getLowestPriceVariant,
 } from "../../../lib/util/product-util";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 
 const { collection: slug } = Astro.params;
 
@@ -31,6 +32,9 @@ Astro.cache.set({
 
 const products = groupVariantsByProduct(collection.productVariants.items);
 const subcollections = collection.children ?? [];
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <BaseLayout
@@ -54,7 +58,7 @@ const subcollections = collection.children ?? [];
               id="subcollection-heading"
               class="text-2xl font-bold tracking-tight"
             >
-              {Astro.locals.m.collection_subcollections()}
+              {t("collection.subcollections")}
             </h2>
 
             <div class="mt-10 grid gap-4 lg:grid-cols-2 lg:gap-8">
@@ -75,7 +79,7 @@ const subcollections = collection.children ?? [];
         products.length > 0 && (
           <section aria-labelledby="products-heading">
             <h2 id="products-heading" class="text-2xl font-bold tracking-tight">
-              {Astro.locals.m.collection_products()}
+              {t("collection.products")}
             </h2>
 
             <div class="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-8">

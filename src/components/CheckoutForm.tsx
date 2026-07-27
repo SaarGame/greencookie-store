@@ -12,7 +12,7 @@ import {
   $activeOrder,
   $notification,
   $savedCheckoutDetails,
-  m,
+  t,
 } from "../lib/client/store";
 import type { AvailableCountry } from "../lib/server/global-settings-service";
 import { debounce } from "../lib/util/debounce";
@@ -61,7 +61,7 @@ export function CheckoutForm({
   if (!$activeOrder.get()?.totalQuantity) {
     return (
       <div className="py-12 text-center">
-        <p className="text-base-content/70 mb-12">{m.cartEmpty({})}</p>
+        <p className="text-base-content/70 mb-12">{t("cart.empty")}</p>
         <a href="/" className="btn btn-primary">
           {" "}
           Home
@@ -264,10 +264,10 @@ export function CheckoutForm({
             e.currentTarget.requestSubmit();
           }}
         >
-          <h2 className="text-lg">{m.checkout_contactInformation({})}</h2>
+          <h2 className="text-lg">{t("checkout.contactInformation")}</h2>
           <div className="mt-4">
             <label htmlFor="email" className="block text-sm">
-              {m.checkout_emailAddress({})}
+              {t("checkout.emailAddress")}
             </label>
             <div className="mt-2">
               <input
@@ -306,11 +306,11 @@ export function CheckoutForm({
           }}
           className="mt-6"
         >
-          <h2 className="text-lg">{m.checkout_shippingInformation({})}</h2>
+          <h2 className="text-lg">{t("checkout.shippingInformation")}</h2>
           <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
             <div>
               <label htmlFor="firstName" className="block text-sm">
-                {m.checkout_firstName({})}
+                {t("checkout.firstName")}
               </label>
               <div className="mt-2">
                 <input
@@ -326,7 +326,7 @@ export function CheckoutForm({
             </div>
             <div>
               <label htmlFor="lastName" className="block text-sm">
-                {m.checkout_lastName({})}
+                {t("checkout.lastName")}
               </label>
               <div className="mt-2">
                 <input
@@ -342,7 +342,7 @@ export function CheckoutForm({
             </div>
             <div className="sm:col-span-2">
               <label htmlFor="company" className="block text-sm">
-                {m.checkout_company({})}
+                {t("checkout.company")}
               </label>
               <div className="mt-2">
                 <input
@@ -356,7 +356,7 @@ export function CheckoutForm({
             </div>
             <div>
               <label htmlFor="postalCode" className="block text-sm">
-                {m.checkout_postalCode({})}
+                {t("checkout.postalCode")}
               </label>
               <div className="mt-2">
                 <input
@@ -372,7 +372,7 @@ export function CheckoutForm({
             </div>
             <div>
               <label htmlFor="streetLine2" className="block text-sm">
-                {m.checkout_houseNumber({})}
+                {t("checkout.houseNumber")}
               </label>
               <div className="mt-2">
                 <input
@@ -387,7 +387,7 @@ export function CheckoutForm({
             </div>
             <div className="sm:col-span-2">
               <label htmlFor="streetLine1" className="block text-sm">
-                {m.checkout_address({})}
+                {t("checkout.address")}
               </label>
               <div className="mt-2">
                 <input
@@ -403,7 +403,7 @@ export function CheckoutForm({
             </div>
             <div>
               <label htmlFor="city" className="block text-sm">
-                {m.checkout_city({})}
+                {t("checkout.city")}
               </label>
               <div className="mt-2">
                 <input
@@ -419,7 +419,7 @@ export function CheckoutForm({
             </div>
             <div>
               <label htmlFor="countryCode" className="block text-sm">
-                {m.checkout_country({})}
+                {t("checkout.country")}
               </label>
               <div className="mt-2">
                 <select
@@ -446,7 +446,7 @@ export function CheckoutForm({
                   type="checkbox"
                   className="checkbox checkbox-sm bg-base-100"
                 />
-                <span className="label-text">{m.checkout_rememberMe({})}</span>
+                <span className="label-text">{t("checkout.rememberMe")}</span>
               </label>
             </div>
           </div>
@@ -457,7 +457,7 @@ export function CheckoutForm({
           <div className="mt-10 pt-10">
             <fieldset>
               <legend className="text-lg">
-                {m.checkout_deliveryMethod({})}
+                {t("checkout.deliveryMethod")}
               </legend>
               <div className="mt-4 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-4">
                 {eligibleShippingMethods.map((method) => (
@@ -511,7 +511,7 @@ export function CheckoutForm({
 
       {/* Order summary */}
       <div className="mt-10 lg:mt-0">
-        <h2 className="text-lg">{m.orderSummary({})}</h2>
+        <h2 className="text-lg">{t("cart.orderSummary")}</h2>
         <div className="my-6 space-y-4">
           {order?.lines.map((line) => (
             <div key={line.id} className="flex gap-4">
@@ -538,10 +538,10 @@ export function CheckoutForm({
             {loading ? (
               <>
                 <span className="loading loading-spinner loading-sm" />{" "}
-                {m.checkout_processing({})}
+                {t("checkout.processing")}
               </>
             ) : (
-              m.checkout_confirmOrder({})
+              t("checkout.confirmOrder")
             )}
           </button>
         </div>

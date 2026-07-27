@@ -6,6 +6,7 @@ import { ProductImageGallery } from "../../../components/ProductImageGallery";
 import { ProductSelector } from "../../../components/ProductSelector";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { getProductBySlug } from "../../../lib/server/product-service";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 
 const product = await getProductBySlug(
   Astro.locals.locale,
@@ -20,6 +21,9 @@ Astro.cache.set({
   swr: 3600,
   tags: ["product", `product:${Astro.params.product}`],
 });
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 ---
 
 <BaseLayout
@@ -59,9 +63,9 @@ Astro.cache.set({
           <ProductSelector
             client:load
             product={product}
-            addToCartLabel={Astro.locals.m.pdp_addToCart()}
-            soldOutLabel={Astro.locals.m.pdp_soldOut()}
-            moreLabel={Astro.locals.m.more()}
+            addToCartLabel={t("pdp.addToCart")}
+            soldOutLabel={t("pdp.soldOut")}
+            moreLabel={t("actions.more")}
           />
 
           <div class="mt-6">

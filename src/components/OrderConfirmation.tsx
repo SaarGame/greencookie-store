@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { type ActiveOrder, getOrderByCode } from "../lib/client/order-service";
-import { m } from "../lib/client/store";
+import { t } from "../lib/client/store";
 import { CartSummary } from "./CartSummary";
 import { formatMoney } from "../lib/util/format-money";
 
@@ -60,9 +60,9 @@ export function OrderConfirmation({ code }: { code: string }) {
   if (failed) {
     return (
       <div className="py-12 text-center">
-        <p className="text-base-content/70 mb-6">{m.order_paymentFailed({})}</p>
+        <p className="text-base-content/70 mb-6">{t("order.paymentFailed")}</p>
         <a href="/" className="btn btn-primary">
-          {m.order_backToHome({})}
+          {t("order.backToHome")}
         </a>
       </div>
     );
@@ -79,7 +79,7 @@ export function OrderConfirmation({ code }: { code: string }) {
   return (
     <div>
       <h1 className="mb-8 text-center text-3xl font-bold">
-        {m.order_confirmed({})}
+        {t("order.confirmed")}
       </h1>
 
       <div className="rounded-box bg-base-100 mb-8 p-2">
@@ -114,7 +114,7 @@ export function OrderConfirmation({ code }: { code: string }) {
       {order.shippingAddress && (
         <div className="rounded-box bg-base-100 p-6">
           <h2 className="mb-4 text-lg font-semibold">
-            {m.checkout_shippingInformation({})}
+            {t("checkout.shippingInformation")}
           </h2>
           <p className="text-sm">
             {order.shippingAddress.fullName}
@@ -136,7 +136,7 @@ export function OrderConfirmation({ code }: { code: string }) {
 
       <div className="mt-6 text-center">
         <a href="/" className="btn btn-outline">
-          {m.continueShopping({})}
+          {t("actions.continueShopping")}
         </a>
       </div>
     </div>

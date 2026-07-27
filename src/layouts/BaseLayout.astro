@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import { Notification } from "../components/Notification";
 import { CartModal } from "../components/CartModal";
-import { translations } from "../translations";
+
 
 interface Props {
   title: string;
@@ -13,7 +13,7 @@ interface Props {
 const { title, metaTitle, metaDescription } = Astro.props;
 ---
 
-<html lang="en" data-locale={Astro.locals.locale}>
+<html lang={Astro.locals.locale} data-locale={Astro.locals.locale}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/png" href="/favicon.png" />
@@ -30,15 +30,13 @@ const { title, metaTitle, metaDescription } = Astro.props;
   </body>
 </html>
 
-<!-- Pass messages for current locale to the client -->
+<!-- Pass current locale to the client -->
 <script
   define:vars={{
-    messages: translations[Astro.locals.locale as keyof typeof translations],
     locale: Astro.locals.locale,
   }}
   is:inline
 >
-  window.__messages = messages;
   window.__locale = locale;
 </script>
 
