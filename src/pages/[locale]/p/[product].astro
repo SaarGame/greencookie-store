@@ -5,12 +5,13 @@ import Navigation from "../../../components/Navigation.astro";
 import { ProductImageGallery } from "../../../components/ProductImageGallery";
 import { ProductSelector } from "../../../components/ProductSelector";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { getProductBySlug } from "../../../lib/server/product-service";
+import { vendureClient } from "../../../lib/util/vendure-client";
+import { ProductBySlugQuery } from "../../../lib/server/product-queries";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 
-const product = await getProductBySlug(
-  Astro.locals.locale,
-  Astro.params.product!,
+const { product } = await vendureClient(Astro.locals.locale).request(
+  ProductBySlugQuery,
+  { slug: Astro.params.product! },
 );
 if (!product) {
   return Astro.redirect(`/404`);

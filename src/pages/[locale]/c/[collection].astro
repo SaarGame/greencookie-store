@@ -5,7 +5,8 @@ import { ProductCard } from "../../../components/ProductCard";
 import CollectionCard from "../../../components/CollectionCard.astro";
 import Footer from "../../../components/Footer.astro";
 import ContentLayout from "../../../layouts/ContentLayout.astro";
-import { getCollectionDetail } from "../../../lib/server/collection-service";
+import { vendureClient } from "../../../lib/util/vendure-client";
+import { CollectionDetailQuery } from "../../../lib/server/collection-queries";
 import {
   groupVariantsByProduct,
   getLowestPriceVariant,
@@ -18,7 +19,10 @@ if (!slug) {
   return Astro.redirect("/404");
 }
 
-const collection = await getCollectionDetail(Astro.locals.locale, slug);
+const { collection } = await vendureClient(Astro.locals.locale).request(
+  CollectionDetailQuery,
+  { slug },
+);
 
 if (!collection) {
   return Astro.redirect("/404");

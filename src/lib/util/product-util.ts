@@ -1,5 +1,5 @@
-import type { CollectionDetailVariant } from "../server/collection-service";
-import type { ProductDetail } from "../server/product-service";
+import type { CollectionDetailVariant } from "../types";
+import type { ProductDetail } from "../types";
 
 /**
  * Get's the variant with the lowest price

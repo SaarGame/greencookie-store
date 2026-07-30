@@ -1,7 +1,33 @@
 import type { APIRoute } from "astro";
 import { ENABLED_LOCALES } from "../config";
-import { getSitemapCollections } from "../lib/server/collection-service";
-import { getSitemapProducts } from "../lib/server/product-service";
+import { vendureClient } from "../lib/util/vendure-client";
+import { graphql } from "../graphql/graphql";
+
+const SitemapProductsQuery = graphql(`
+  query GetSitemapProducts($skip: Int!, $take: Int!) {
+    products(options: { skip: $skip, take: $take }) {
+      items {
+        slug
+        updatedAt
+      }
+      totalItems
+    }
+  }
+`);
+
+const SitemapCollectionsQuery = graphql(`
+  query GetSitemapCollections($skip: Int!, $take: Int!) {
+    collections(options: { skip: $skip, take: $take }) {
+      items {
+        slug
+        updatedAt
+      }
+      totalItems
+    }
+  }
+`);
+
+const SITEMAP_BATCH_SIZE = 100;
 
 function escapeXml(s: string): string {
   return s
@@ -23,10 +49,40 @@ async function buildSitemapXml(baseUrl: string): Promise<string> {
   const urlEntries: { loc: string; lastmod: string }[] = [];
 
   for (const locale of ENABLED_LOCALES) {
-    const [products, collections] = await Promise.all([
-      getSitemapProducts(locale),
-      getSitemapCollections(locale),
-    ]);
+    const products: { slug: string; updatedAt: string }[] = [];
+    let skipProducts = 0;
+    let hasMoreProducts = true;
+    while (hasMoreProducts) {
+      const { products: p } = await vendureClient(locale).request(
+        SitemapProductsQuery,
+        {
+          skip: skipProducts,
+          take: SITEMAP_BATCH_SIZE,
+        },
+      );
+      products.push(...p.items);
+      skipProducts += SITEMAP_BATCH_SIZE;
+      hasMoreProducts =
+        p.items.length === SITEMAP_BATCH_SIZE && skipProducts < p.totalItems;
+    }
+
+    const collections: { slug: string; updatedAt: string }[] = [];
+    let skipCollections = 0;
+    let hasMoreCollections = true;
+    while (hasMoreCollections) {
+      const { collections: c } = await vendureClient(locale).request(
+        SitemapCollectionsQuery,
+        {
+          skip: skipCollections,
+          take: SITEMAP_BATCH_SIZE,
+        },
+      );
+      collections.push(...c.items);
+      skipCollections += SITEMAP_BATCH_SIZE;
+      hasMoreCollections =
+        c.items.length === SITEMAP_BATCH_SIZE && skipCollections < c.totalItems;
+    }
+
     // Home
     urlEntries.push({
       loc: `${baseUrl}/${locale}/`,

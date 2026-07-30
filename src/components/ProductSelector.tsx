@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import type { ProductDetail } from "../lib/server/product-service";
+import type { ProductDetail } from "../lib/types";
 import { formatMoney } from "../lib/util/format-money";
 import { addItemToOrder } from "../lib/client/order-service";
 import { QuantitySelector } from "./QuantitySelector";

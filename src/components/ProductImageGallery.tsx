@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { ProductDetail } from "../lib/server/product-service";
+import type { ProductDetail } from "../lib/types";
 
 type ProductImageGalleryProps = {
   product: ProductDetail;

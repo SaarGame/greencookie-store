@@ -14,7 +14,7 @@ import {
   $savedCheckoutDetails,
   t,
 } from "../lib/client/store";
-import type { AvailableCountry } from "../lib/server/global-settings-service";
+import type { AvailableCountry } from "../lib/types";
 import { debounce } from "../lib/util/debounce";
 import { formatMoney } from "../lib/util/format-money";
 import { CartSummary } from "./CartSummary";

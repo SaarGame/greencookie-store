@@ -1,8 +1,9 @@
 ---
-import { getNavigationCollections } from "../lib/server/collection-service";
+import { vendureClient } from "../lib/util/vendure-client";
+import { NavigationCollectionsQuery } from "../lib/server/collection-queries";
 
 const locale = Astro.locals.locale;
-const collections = await getNavigationCollections(locale);
+const { collections: { items: collections } } = await vendureClient(locale).request(NavigationCollectionsQuery);
 const base = `/${locale}`;
 ---
 

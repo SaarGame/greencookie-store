@@ -5,13 +5,14 @@ import Hero from "../../components/Hero.astro";
 import { ProductCard } from "../../components/ProductCard";
 import CollectionCard from "../../components/CollectionCard.astro";
 import Footer from "../../components/Footer.astro";
-import { getNavigationCollections } from "../../lib/server/collection-service";
-import { getPopularProducts } from "../../lib/server/product-service";
+import { vendureClient } from "../../lib/util/vendure-client";
+import { NavigationCollectionsQuery } from "../../lib/server/collection-queries";
+import { PopularProductsQuery } from "../../lib/server/product-queries";
 import ContentLayout from "../../layouts/ContentLayout.astro";
 import { getLowestPriceVariant } from "../../lib/util/product-util";
 
-const collections = await getNavigationCollections(Astro.locals.locale);
-const products = await getPopularProducts(Astro.locals.locale);
+const { collections: { items: collections } } = await vendureClient(Astro.locals.locale).request(NavigationCollectionsQuery);
+const { products: { items: products } } = await vendureClient(Astro.locals.locale).request(PopularProductsQuery, { limit: 4 });
 
 Astro.cache.set({ maxAge: 43200, swr: 3600, tags: ["home"] });
 ---
