@@ -2,6 +2,7 @@
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"compatibility_date": "2026-10-10",
 	"compatibility_flags": ["global_fetch_strictly_public"],
+	"pages_build_output_dir": "./dist",
 	"name": "greencookie-store",
 	"main": "@astrojs/cloudflare/entrypoints/server",
 	"assets": {
@@ -16,7 +17,6 @@
 		"PUBLIC_DEFAULT_LOCALE": "en",
 		"PUBLIC_ENABLED_LOCALES": "en,he",
 		"PUBLIC_VENDURE_CHANNEL_TOKEN": "__default_channel__",
-		"SITE_NAME": "Green`s Model Shop",
-		"VITE_SITE_URL": "http://localhost:3001"
+		"SITE_NAME": "Green`s Model Shop"
 	}
 }
