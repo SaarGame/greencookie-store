@@ -21,6 +21,9 @@ export function vendureClient(locale: string): GraphQLClient {
   return new GraphQLClient(vendureApi(locale), {
     fetch: async (url, options) => {
       const token = getAuthToken();
+
+      options = { ...options, cache: 'no-store'};
+
       if (token || CHANNEL_TOKEN) {
         const headers = new Headers(
           options?.headers as HeadersInit | undefined,
