@@ -4,7 +4,7 @@
 @import "@fontsource/sen/latin-700.css";
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light --default;
+  themes: dark --default;
 }
 
 :root {
@@ -33,19 +33,19 @@ body {
   name: "minimal";
   default: true;
   prefersdark: false;
-  color-scheme: "light";
+  color-scheme: "dark";
   --color-base-100: oklch(100% 0 0);
-  --color-base-200: oklch(95% 0 0);
-  --color-base-300: oklch(92% 0 0);
-  --color-base-content: oklch(20% 0 0);
-  --color-primary: oklch(0.9167 0.1491 119.91);
-  --color-primary-content: oklch(26% 0 0);
-  --color-secondary: oklch(87% 0 0);
-  --color-secondary-content: oklch(26% 0 0);
-  --color-accent: oklch(87% 0 0);
-  --color-accent-content: oklch(26% 0 0);
-  --color-neutral: oklch(0.26 0.0063 78.22);
-  --color-neutral-content: oklch(1 0 none);
+  --color-base-200: oklch(0.387 0.088 143.638);
+  --color-base-300: oklch(0.387 0.088 143.638);
+  --color-base-content: oklch(0.164 0 0);
+  --color-primary: oklch(0.783 0.089 84.287);
+  --color-primary-content: oklch(0.387 0.088 143.638);
+  --color-secondary: oklch(0 0 0);
+  --color-secondary-content: oklch(0.442 0.142 142.518);
+  --color-accent: oklch(0.449 0.004 17.302);
+  --color-accent-content: oklch(0.387 0.088 143.638);
+  --color-neutral: oklch(0.442 0.142 142.518);
+  --color-neutral-content: oklch(0.164 0 0);
   --color-info: oklch(44% 0.11 240.79);
   --color-info-content: oklch(90% 0.058 230.902);
   --color-success: oklch(43% 0.095 166.913);
