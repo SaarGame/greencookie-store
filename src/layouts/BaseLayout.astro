@@ -11,6 +11,8 @@ interface Props {
 }
 
 const { title, metaTitle, metaDescription } = Astro.props;
+
+Astro.response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
 ---
 
 <html lang={Astro.locals.locale} data-locale={Astro.locals.locale}>

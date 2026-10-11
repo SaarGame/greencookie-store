@@ -15,6 +15,7 @@ const { collections: { items: collections } } = await vendureClient(Astro.locals
 const { products: { items: products } } = await vendureClient(Astro.locals.locale).request(PopularProductsQuery, { limit: 4 });
 
 Astro.cache.set({ maxAge: 43200, swr: 3600, tags: ["home"] });
+Astro.response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
 ---
 
 <BaseLayout title="Astro" , metaTitle="Astro" , metaDescription="Astro">
