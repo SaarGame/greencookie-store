@@ -4,8 +4,14 @@
 	"compatibility_flags": ["global_fetch_strictly_public"],
 	"pages_build_output_dir": "./dist",
 	"name": "greencookie-store",
+	"main": "@astrojs/cloudflare/entrypoints/server",
 	"observability": {
 		"enabled": true
+	},
+	"assets": {
+		"directory": "./dist",
+		"binding": "ASSETS",
+		"not_found_handling": "404-page"
 	},
 	"vars": {
 		"PUBLIC_DEFAULT_LOCALE": "en",
