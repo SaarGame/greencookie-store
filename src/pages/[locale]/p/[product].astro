@@ -9,6 +9,8 @@ import { vendureClient } from "../../../lib/util/vendure-client";
 import { ProductBySlugQuery } from "../../../lib/server/product-queries";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 
+export const prerender = false;
+
 const { product } = await vendureClient(Astro.locals.locale).request(
   ProductBySlugQuery,
   { slug: Astro.params.product! },
