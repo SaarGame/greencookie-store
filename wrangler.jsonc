@@ -5,13 +5,13 @@
 	"pages_build_output_dir": "./dist",
 	"name": "greencookie-store",
 	"main": "@astrojs/cloudflare/entrypoints/server",
-	"observability": {
-		"enabled": true
-	},
 	"assets": {
 		"directory": "./dist",
 		"binding": "ASSETS",
 		"not_found_handling": "404-page"
+	},
+	"observability": {
+		"enabled": true
 	},
 	"vars": {
 		"PUBLIC_DEFAULT_LOCALE": "en",
