@@ -34,32 +34,47 @@ body {
   default: true;
   prefersdark: false;
   color-scheme: "dark";
-  --color-base-100: oklch(100% 0 0);
-  --color-base-200: oklch(0.387 0.088 143.638);
-  --color-base-300: oklch(0.387 0.088 143.638);
-  --color-base-content: oklch(0.164 0 0);
-  --color-primary: oklch(0.783 0.089 84.287);
-  --color-primary-content: oklch(0.387 0.088 143.638);
-  --color-secondary: oklch(0 0 0);
-  --color-secondary-content: oklch(0.442 0.142 142.518);
-  --color-accent: oklch(0.449 0.004 17.302);
-  --color-accent-content: oklch(0.387 0.088 143.638);
-  --color-neutral: oklch(0.442 0.142 142.518);
-  --color-neutral-content: oklch(0.164 0 0);
-  --color-info: oklch(44% 0.11 240.79);
-  --color-info-content: oklch(90% 0.058 230.902);
-  --color-success: oklch(43% 0.095 166.913);
-  --color-success-content: oklch(90% 0.093 164.15);
-  --color-warning: oklch(47% 0.137 46.201);
-  --color-warning-content: oklch(92% 0.12 95.746);
-  --color-error: oklch(44% 0.177 26.899);
-  --color-error-content: oklch(88% 0.062 18.334);
+  /* Backgrounds: Earthy, mid-tone matcha and sage (no stark whites or blacks) */
+  --color-base-100: oklch(82% 0.03 145); /* Product cards: Soft matcha */
+  --color-base-200: oklch(76% 0.04 145); /* Main body: Muted earthy sage */
+  --color-base-300: oklch(68% 0.05 145); /* Borders/Highlights: Deep olive */
+
+  /* Text: Deepest forest green for high contrast without harsh black */
+  --color-base-content: oklch(20% 0.02 145);
+
+  /* Primary (Buttons): A vibrant, grounded leaf green */
+  --color-primary: oklch(45% 0.08 150);
+  --color-primary-content: oklch(95% 0.01 150);
+
+  /* Secondary: Warm, muted moss */
+  --color-secondary: oklch(55% 0.06 145);
+  --color-secondary-content: oklch(15% 0.02 145);
+
+  /* Accent: A complementary muted teal */
+  --color-accent: oklch(60% 0.06 170);
+  --color-accent-content: oklch(15% 0.02 170);
+
+  /* Neutral (Navigation Header & Footer): Dark pine to frame the page */
+  --color-neutral: oklch(35% 0.04 145);
+  --color-neutral-content: oklch(90% 0.02 145); /* Pale sage text inside header/footer */
+
+  /* State Colors */
+  --color-info: oklch(65% 0.08 240);
+  --color-info-content: oklch(20% 0.04 240);
+  --color-success: oklch(55% 0.08 150);
+  --color-success-content: oklch(15% 0.04 150);
+  --color-warning: oklch(75% 0.12 80);
+  --color-warning-content: oklch(25% 0.04 80);
+  --color-error: oklch(60% 0.12 25);
+  --color-error-content: oklch(95% 0.01 25);
+
+  /* Border Radii: Modernized and normalized */
   --radius-selector: 0.5rem;
-  --radius-field: 2rem;
+  --radius-field: 0.5rem;
   --radius-box: 1rem;
   --size-selector: 0.25rem;
   --size-field: 0.3rem;
-  --border: 0.5px;
+  --border: 1px;
   --depth: 0;
   --noise: 0;
 }
