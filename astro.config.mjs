@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, memoryCache } from "astro/config";
+import { defineConfig } from "astro/config";
 import node from "@astrojs/node";
 import tailwindcss from "@tailwindcss/vite";
 
@@ -20,11 +20,6 @@ export default defineConfig({
   prefetch: {
     prefetchAll: true,
     defaultStrategy: "hover",
-  },
-  cache: {
-    provider: memoryCache({
-      max: 1000 // max 1000 pages cached
-    }),
   },
 
 });
