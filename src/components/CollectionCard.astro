@@ -12,14 +12,14 @@ const { href, image, title, description } = Astro.props;
 ---
 
 <a href={href} class="group block">
-  <figure class="relative">
+  <figure class="relative aspect-square rounded-box overflow-hidden">
     <img
       src={image}
       alt={title}
-      class="rounded-box aspect-square w-full object-cover"
+      class="w-full h-full object-contain object-center"
     />
     <div
-      class="bg-base-100 rounded-box absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-20"
+      class="bg-base-100 absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-20"
       aria-hidden="true"
     >
     </div>
