@@ -59,6 +59,7 @@ export const ui = {
     "home.hero.buttonText": "About Us",
     "home.popularProducts": "Popular products",
     "home.shopByFaction": "Shop by Faction",
+    "home.shopByCollection": "Shop by Collection",
   },
   he: {
     "cart.itemAdded": "נוסף לסל",
@@ -110,5 +111,6 @@ export const ui = {
     "home.hero.buttonText": "אודותינו",
     "home.popularProducts": "מוצרים פופולריים",
     "home.shopByFaction": "קנה לפי מותג",
+    "home.shopByCollection": "קנה לפי אוסף",
   },
 } as const;
