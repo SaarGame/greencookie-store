@@ -12,21 +12,41 @@ import ContentLayout from "../../layouts/ContentLayout.astro";
 import { getLowestPriceVariant } from "../../lib/util/product-util";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
-const { collections: { items: collections } } = await vendureClient(Astro.locals.locale).request(NavigationCollectionsQuery);
-const { products: { items: products } } = await vendureClient(Astro.locals.locale).request(PopularProductsQuery, { limit: 4 });
-
 export const prerender = false;
 
-Astro.cache.set({ maxAge: 43200, swr: 3600, tags: ["home"] });
+const client = vendureClient(Astro.locals.locale);
+const [
+  {
+    collections: { items: collections },
+  },
+  {
+    products: { items: products },
+  },
+] = await Promise.all([
+  client.request(NavigationCollectionsQuery),
+  client.request(PopularProductsQuery, { limit: 4 }),
+]);
+
+Astro.cache.set({
+  maxAge: 43200,
+  swr: 3600,
+  tags: ["home", "product", "collection"],
+});
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=0, must-revalidate",
+);
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
-
-Astro.response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
 ---
 
-<BaseLayout title={t("home.meta.title")} , metaTitle={t("home.meta.title")} , metaDescription={t("home.meta.description")}>
-  <Navigation />
+<BaseLayout
+  title={t("home.meta.title")}
+  metaTitle={t("home.meta.title")}
+  metaDescription={t("home.meta.description")}
+>
+  <Navigation collections={collections} />
 
   <Hero
     image="https://images.unsplash.com/photo-1665937832097-832d1e08cf3f?q=80&w=1472&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
@@ -49,6 +69,7 @@ Astro.response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate
             products.map((product) => (
               <ProductCard
                 client:load
+                locale={Astro.locals.locale}
                 slug={product.slug}
                 image={product.featuredAsset?.preview ?? ""}
                 title={product.name}
@@ -66,15 +87,13 @@ Astro.response.headers.set('Cache-Control', 'no-store, no-cache, must-revalidate
         <h2 id="collection-heading" class="text-2xl font-bold tracking-tight">
           {t("home.shopByFaction")}
         </h2>
-        <p class="mt-4 text-base opacity-70">
-
-        </p>
+        <p class="mt-4 text-base opacity-70"></p>
 
         <div class="mt-10 grid gap-4 lg:grid-cols-3 lg:gap-8">
           {
             collections.map((collection) => (
               <CollectionCard
-                href={`/c/${collection.slug}`}
+                href={`/${Astro.locals.locale}/c/${collection.slug}`}
                 image={`${collection.featuredAsset?.preview}`}
                 title={collection.name}
               />

@@ -1,4 +1,5 @@
 ---
+import type { ResultOf } from "gql.tada";
 import { vendureClient } from "../lib/util/vendure-client";
 import { NavigationCollectionsQuery } from "../lib/server/collection-queries";
 import NavigationMobile from "./NavigationMobile.astro";
@@ -6,8 +7,17 @@ import { Bars3 } from "./icons/Bars3";
 import { MagnifyingGlass } from "./icons/MagnifyingGlass";
 import { Cart } from "./Cart";
 
+interface Props {
+  collections?: ResultOf<
+    typeof NavigationCollectionsQuery
+  >["collections"]["items"];
+}
+
 const locale = Astro.locals.locale;
-const { collections: { items: collections } } = await vendureClient(locale).request(NavigationCollectionsQuery);
+const collections =
+  Astro.props.collections ??
+  (await vendureClient(locale).request(NavigationCollectionsQuery)).collections
+    .items;
 const base = `/${locale}`;
 ---
 
@@ -20,7 +30,7 @@ const base = `/${locale}`;
     <div class="navbar mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <!-- Logo (desktop) -->
       <div class="navbar-start hidden lg:flex">
-        <a href="/" class="link link-hover">
+        <a href={`${base}/`} class="link link-hover">
           <img src="/logo.png" alt="Your Company" class="h-10 w-auto" />
         </a>
       </div>
@@ -83,7 +93,7 @@ const base = `/${locale}`;
 
       <!-- Logo (mobile) -->
       <div class="navbar-center lg:hidden">
-        <a href="/">
+        <a href={`${base}/`}>
           <img src="/logo.png" alt="Your Company" class="h-8 w-auto" />
         </a>
       </div>

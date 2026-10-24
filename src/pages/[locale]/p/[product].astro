@@ -6,15 +6,22 @@ import { ProductImageGallery } from "../../../components/ProductImageGallery";
 import { ProductSelector } from "../../../components/ProductSelector";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import { vendureClient } from "../../../lib/util/vendure-client";
+import { NavigationCollectionsQuery } from "../../../lib/server/collection-queries";
 import { ProductBySlugQuery } from "../../../lib/server/product-queries";
 import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 
 export const prerender = false;
 
-const { product } = await vendureClient(Astro.locals.locale).request(
-  ProductBySlugQuery,
-  { slug: Astro.params.product! },
-);
+const client = vendureClient(Astro.locals.locale);
+const [
+  { product },
+  {
+    collections: { items: navCollections },
+  },
+] = await Promise.all([
+  client.request(ProductBySlugQuery, { slug: Astro.params.product! }),
+  client.request(NavigationCollectionsQuery),
+]);
 if (!product) {
   return Astro.redirect(`/404`);
 }
@@ -24,6 +31,10 @@ Astro.cache.set({
   swr: 3600,
   tags: ["product", `product:${Astro.params.product}`],
 });
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, max-age=0, must-revalidate",
+);
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -34,7 +45,7 @@ const t = useTranslations(lang);
   metaTitle="Product"
   metaDescription="Product detail"
 >
-  <Navigation />
+  <Navigation collections={navCollections} />
 
   <main>
     <Breadcrumb

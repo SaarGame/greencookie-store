@@ -14,23 +14,33 @@ interface Props {
   title: string;
   price: number;
   variants: Variant[];
+  locale?: string;
 }
 
-export function ProductCard({ slug, image, title, price, variants }: Props) {
+export function ProductCard({
+  slug,
+  image,
+  title,
+  price,
+  variants,
+  locale,
+}: Props) {
   const [loading, setLoading] = useState(false);
 
   async function handleAddToCart(e: React.MouseEvent) {
     e.preventDefault();
     setLoading(true);
     try {
-      await addItemToOrder(window.__locale, variants[0].id, 1);
+      await addItemToOrder(locale ?? window.__locale, variants[0].id, 1);
     } finally {
       setLoading(false);
     }
   }
 
+  const productHref = locale ? `/${locale}/p/${slug}` : `/p/${slug}`;
+
   return (
-    <a href={`/p/${slug}`} className="group bg-base-200 block w-full min-w-0">
+    <a href={productHref} className="group bg-base-200 block w-full min-w-0">
       <figure className="relative aspect-square">
         <img
           src={`${image}`}

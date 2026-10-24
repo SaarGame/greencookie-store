@@ -1,10 +1,11 @@
 // @ts-check
 import { defineConfig } from "astro/config";
-import node from "@astrojs/node";
 import tailwindcss from "@tailwindcss/vite";
 
 import react from "@astrojs/react";
 import cloudflare from "@astrojs/cloudflare";
+import { cacheCloudflare } from "@astrojs/cloudflare/cache";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [react()],
@@ -19,7 +20,9 @@ export default defineConfig({
   adapter: cloudflare(),
   prefetch: {
     prefetchAll: true,
-    defaultStrategy: "hover",
+    defaultStrategy: "tap",
   },
-
+  cache: {
+    provider: cacheCloudflare(),
+  },
 });
